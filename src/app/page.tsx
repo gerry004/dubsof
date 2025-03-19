@@ -36,7 +36,7 @@ export default function Home() {
       {/* Partners Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-center mb-12 text-gray-800">Our Partners Work With</h2>
+          <h2 className="text-2xl font-bold text-center mb-12 text-gray-800">Our Clients Work With</h2>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
             {/* Placeholder logos */}
             {[1, 2, 3, 4, 5].map((i) => (
@@ -88,7 +88,7 @@ export default function Home() {
       </section>
 
       {/* Our Approach Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">Our Approach: Beyond Software Development</h2>
           <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-12">
@@ -96,91 +96,66 @@ export default function Home() {
             Our process begins with understanding your business from the inside out:
           </p>
           
-          <div className="space-y-6 mt-12">
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-              <div className="flex items-start">
-                <div className="mr-4 mt-1">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                  </div>
+          <div className="max-w-4xl mx-auto mt-16 relative">
+            {/* Timeline line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-blue-200 md:transform md:-translate-x-1/2"></div>
+            
+            {/* Timeline items */}
+            <div className="space-y-16 md:space-y-24">
+              <div className="relative flex flex-col md:block">
+                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">1</div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">Comprehensive Assessment</h3>
+                <div className="pl-12 md:pl-0 md:ml-auto md:mr-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Comprehensive Assessment</h3>
                   <p className="text-gray-600">
-                    We thoroughly analyse your current processes and tech stack to identify inefficiencies and opportunities for automation. 
-                    This service, including the initial consultation, is free of any charge.
+                    We'll thoroughly analyse your current processes and tech stack to identify inefficiencies and opportunities for automation.
                   </p>
                 </div>
               </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-              <div className="flex items-start">
-                <div className="mr-4 mt-1">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                  </div>
+              
+              <div className="relative flex flex-col md:block">
+                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">2</div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">Strategic Planning</h3>
+                <div className="pl-12 md:pl-0 md:mr-auto md:ml-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Strategic Planning</h3>
                   <p className="text-gray-600">
-                    We develop a detailed roadmap aligned with your operational goals and budget, and subsequently build a proposal.
+                    We'll develop a detailed roadmap aligned with your operational goals and budget, and subsequently build a proposal.
                   </p>
                 </div>
               </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-              <div className="flex items-start">
-                <div className="mr-4 mt-1">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                    </svg>
-                  </div>
+              
+              <div className="relative flex flex-col md:block">
+                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">3</div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">Custom Development</h3>
+                <div className="pl-12 md:pl-0 md:ml-auto md:mr-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Custom Development</h3>
                   <p className="text-gray-600">
-                    We build solutions tailored to your exact specifications using agile methodologies and in-house tech experts.
+                    We'll build solutions tailored to your exact specifications using agile methodologies and in-house tech experts.
                   </p>
                 </div>
               </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-              <div className="flex items-start">
-                <div className="mr-4 mt-1">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
+              
+              <div className="relative flex flex-col md:block">
+                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">4</div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">Seamless Integration</h3>
+                <div className="pl-12 md:pl-0 md:mr-auto md:ml-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Seamless Integration</h3>
                   <p className="text-gray-600">
-                    We ensure your new software integrates perfectly with existing systems, minimising disruption.
+                    We'll ensure your new software integrates perfectly with existing systems, minimising disruption.
                   </p>
                 </div>
               </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-              <div className="flex items-start">
-                <div className="mr-4 mt-1">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
+
+              <div className="relative flex flex-col md:block">
+                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">5</div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">Ongoing Support</h3>
+                <div className="pl-12 md:pl-0 md:ml-auto md:mr-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">Ongoing Support</h3>
                   <p className="text-gray-600">
                     We provide continuous support and enhancements as your business evolves.
                   </p>
@@ -275,50 +250,56 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-900 text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-white">Contact Us</h2>
-          <p className="text-center text-xl max-w-3xl mx-auto mb-12 text-blue-100">
-            The Time to Transform Is Now
-          </p>
-          
-          <div className="grid md:grid-cols-2 gap-12">
+      <section id="contact" className="py-20 bg-blue-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">          
+          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
             <div>
-              <p className="mb-6 text-gray-300">
-                In 10 years, nobody will be paying for SaaS—it's time to get ahead of the curve. 
-                Competition is becoming a scenario of who has the most efficient software systems, 
-                who can slash wasteful spending, and who can increase the bottom line.
+              <div className="inline-block px-4 py-1 my-2 bg-blue-100 rounded-full text-blue-600 font-medium text-sm">
+                Contact Us
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                The Time to Transform Is <span className="text-blue-600">Now</span>
+              </h2>
+              
+              <p className="mb-6 text-gray-700">
+                In 10 years, nobody will be paying for SaaS—it's time to get ahead
+                of the curve. Competition is becoming a scenario of who has the
+                most efficient software systems.
               </p>
-              <p className="mb-6 text-gray-300">
-                Let us help you build a more efficient, more profitable business through custom 
-                software that's built once and owned forever.
+              <p className="mb-6 text-gray-700">
+                Let us help you build a more efficient, more profitable business
+                through custom software that's built once and owned forever.
               </p>
-              <p className="mb-6 font-medium text-white">
-                Schedule your complimentary efficiency consultation today.
-              </p>
-              <div className="space-y-4">
-                <p className="flex items-center text-gray-300 hover:text-white transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  +353 87 123 4567
-                </p>
-                <p className="flex items-center text-gray-300 hover:text-white transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              
+              <div className="space-y-4 mt-8">
+                <a href="mailto:team@dubsof.com" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   team@dubsof.com
-                </p>
+                </a>
+                <a href="#" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  +353 87 119 7330
+                </a>
               </div>
             </div>
             
             <div>
-              <form className="bg-white text-gray-800 p-8 rounded-lg shadow-lg">
+              <form 
+                action="/api/contact" 
+                method="POST"
+                className="bg-white p-8 rounded-lg shadow-lg border border-gray-100"
+              >
                 <div className="mb-5">
                   <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name</label>
                   <input 
                     type="text" 
-                    id="name" 
+                    id="name"
+                    name="name"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     placeholder="Your name"
                   />
@@ -328,23 +309,38 @@ export default function Home() {
                   <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
                   <input 
                     type="email" 
-                    id="email" 
+                    id="email"
+                    name="email"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    placeholder="your.email@example.com"
+                    placeholder="Your email"
+                  />
+                </div>
+                
+                <div className="mb-5">
+                  <label htmlFor="company" className="block text-gray-700 font-medium mb-2">Company</label>
+                  <input 
+                    type="text" 
+                    id="company"
+                    name="company"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    placeholder="Your company"
                   />
                 </div>
                 
                 <div className="mb-5">
                   <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Message</label>
                   <textarea 
-                    id="message" 
+                    id="message"
+                    name="message"
+                    required
                     rows={4}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     placeholder="How can we help you?"
                   ></textarea>
                 </div>
                 
-                <button type="submit" className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-300">
+                <button type="submit" className="w-full px-6 py-3 bg-gray-900 text-white font-medium rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-300">
                   Send Message
                 </button>
               </form>

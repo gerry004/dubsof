@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import ScrollButton from '@/components/ScrollButton';
 
 export default function Home() {
   return (
@@ -21,13 +22,13 @@ export default function Home() {
               Our custom solutions are built specifically for each
               client, ensuring you only pay once for powerful software.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="#contact" className="px-8 py-3 bg-gray-900 text-white font-medium rounded-md shadow-md hover:bg-gray-800 transition-colors duration-300">
-                Schedule Consultation
-              </Link>
-              <Link href="#what-we-do" className="px-8 py-3 bg-white text-gray-900 font-medium rounded-md shadow-md border border-gray-200 hover:bg-gray-50 transition-colors duration-300">
-                Learn More
-              </Link>
+            <div className="flex justify-center">
+              <ScrollButton 
+                href="#what-we-do" 
+                className="px-8 py-3 bg-gray-900 text-white font-medium rounded-md shadow-md hover:bg-gray-800 transition-colors duration-300"
+              >
+                Tell Me More
+              </ScrollButton>
             </div>
           </div>
         </div>
@@ -38,10 +39,21 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-center mb-12 text-gray-800">Our Clients Work With</h2>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-            {/* Placeholder logos */}
-            {[1, 2, 3, 4, 5].map((i) => (
+            {/* Logo images */}
+            {[
+              { src: '/images/logos/logo1.png', alt: 'Company 1' },
+              { src: '/images/logos/logo2.png', alt: 'Company 2' },
+              { src: '/images/logos/logo3.png', alt: 'Company 3' },
+              { src: '/images/logos/logo4.png', alt: 'Company 4' },
+            ].map((logo, i) => (
               <div key={i} className="w-32 h-12 bg-white rounded-md shadow-sm flex items-center justify-center border border-gray-100">
-                <span className="text-gray-500 font-medium">Logo {i}</span>
+                <Image 
+                  src={logo.src} 
+                  alt={logo.alt} 
+                  width={100} 
+                  height={40} 
+                  className="object-contain"
+                />
               </div>
             ))}
           </div>
@@ -96,71 +108,45 @@ export default function Home() {
             Our process begins with understanding your business from the inside out:
           </p>
           
-          <div className="max-w-4xl mx-auto mt-16 relative">
-            {/* Timeline line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-blue-200 md:transform md:-translate-x-1/2"></div>
+          <div className="max-w-3xl mx-auto space-y-6">
+            <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+              <div className="w-12 h-12 border-2 border-blue-600 rounded-full flex items-center justify-center mb-4 text-blue-600 font-medium text-lg">1</div>
+              <h3 className="text-xl font-bold mb-3 text-gray-800">Comprehensive Assessment</h3>
+              <p className="text-gray-600">
+                We'll thoroughly analyse your current processes and tech stack to identify inefficiencies and opportunities for automation.
+              </p>
+            </div>
             
-            {/* Timeline items */}
-            <div className="space-y-16 md:space-y-24">
-              <div className="relative flex flex-col md:block">
-                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">1</div>
-                </div>
-                <div className="pl-12 md:pl-0 md:ml-auto md:mr-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">Comprehensive Assessment</h3>
-                  <p className="text-gray-600">
-                    We'll thoroughly analyse your current processes and tech stack to identify inefficiencies and opportunities for automation.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="relative flex flex-col md:block">
-                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">2</div>
-                </div>
-                <div className="pl-12 md:pl-0 md:mr-auto md:ml-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">Strategic Planning</h3>
-                  <p className="text-gray-600">
-                    We'll develop a detailed roadmap aligned with your operational goals and budget, and subsequently build a proposal.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="relative flex flex-col md:block">
-                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">3</div>
-                </div>
-                <div className="pl-12 md:pl-0 md:ml-auto md:mr-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">Custom Development</h3>
-                  <p className="text-gray-600">
-                    We'll build solutions tailored to your exact specifications using agile methodologies and in-house tech experts.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="relative flex flex-col md:block">
-                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">4</div>
-                </div>
-                <div className="pl-12 md:pl-0 md:mr-auto md:ml-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">Seamless Integration</h3>
-                  <p className="text-gray-600">
-                    We'll ensure your new software integrates perfectly with existing systems, minimising disruption.
-                  </p>
-                </div>
-              </div>
+            <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+              <div className="w-12 h-12 border-2 border-blue-600 rounded-full flex items-center justify-center mb-4 text-blue-600 font-medium text-lg">2</div>
+              <h3 className="text-xl font-bold mb-3 text-gray-800">Strategic Planning</h3>
+              <p className="text-gray-600">
+                We'll develop a detailed roadmap aligned with your operational goals and budget, and subsequently build a proposal.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+              <div className="w-12 h-12 border-2 border-blue-600 rounded-full flex items-center justify-center mb-4 text-blue-600 font-medium text-lg">3</div>
+              <h3 className="text-xl font-bold mb-3 text-gray-800">Custom Development</h3>
+              <p className="text-gray-600">
+                We'll build solutions tailored to your exact specifications using agile methodologies and in-house tech experts.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+              <div className="w-12 h-12 border-2 border-blue-600 rounded-full flex items-center justify-center mb-4 text-blue-600 font-medium text-lg">4</div>
+              <h3 className="text-xl font-bold mb-3 text-gray-800">Seamless Integration</h3>
+              <p className="text-gray-600">
+                We'll ensure your new software integrates perfectly with existing systems, minimising disruption.
+              </p>
+            </div>
 
-              <div className="relative flex flex-col md:block">
-                <div className="absolute left-4 md:left-1/2 transform translate-x-[-50%] md:-translate-x-1/2 z-10">
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium text-lg">5</div>
-                </div>
-                <div className="pl-12 md:pl-0 md:ml-auto md:mr-8 md:w-5/12 bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800">Ongoing Support</h3>
-                  <p className="text-gray-600">
-                    We provide continuous support and enhancements as your business evolves.
-                  </p>
-                </div>
-              </div>
+            <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+              <div className="w-12 h-12 border-2 border-blue-600 rounded-full flex items-center justify-center mb-4 text-blue-600 font-medium text-lg">5</div>
+              <h3 className="text-xl font-bold mb-3 text-gray-800">Ongoing Support</h3>
+              <p className="text-gray-600">
+                We provide continuous support and enhancements as your business evolves.
+              </p>
             </div>
           </div>
         </div>
@@ -243,6 +229,55 @@ export default function Home() {
                     <p className="text-gray-600">{item.description}</p>
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">Meet Our Team</h2>
+          <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-12">
+            Our team of experts is dedicated to creating custom software solutions that transform businesses.
+          </p>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              { 
+                name: 'John Smith', 
+                role: 'CEO & Founder', 
+                image: '/images/team/john.jpg',
+                bio: 'Over 15 years of experience in software development and business transformation.'
+              },
+              { 
+                name: 'Sarah Johnson', 
+                role: 'CTO', 
+                image: '/images/team/sarah.jpg',
+                bio: 'Expert in cloud architecture and enterprise software solutions.'
+              },
+              { 
+                name: 'Michael Brown', 
+                role: 'Lead Developer', 
+                image: '/images/team/michael.jpg',
+                bio: 'Full-stack developer specializing in scalable applications.'
+              },
+              // Add more team members as needed
+            ].map((member, i) => (
+              <div key={i} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 text-center">
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                  <Image 
+                    src={member.image} 
+                    alt={member.name} 
+                    width={128} 
+                    height={128} 
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-1 text-gray-800">{member.name}</h3>
+                <p className="text-blue-600 font-medium mb-3">{member.role}</p>
+                <p className="text-gray-600">{member.bio}</p>
               </div>
             ))}
           </div>

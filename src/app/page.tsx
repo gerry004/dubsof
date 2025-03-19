@@ -37,7 +37,7 @@ export default function Home() {
       {/* Partners Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-center mb-12 text-gray-800">Our Clients Work With</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Our Clients Work With</h2>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
             {/* Logo images */}
             {[
@@ -63,8 +63,8 @@ export default function Home() {
       {/* Better Than Off-the-Shelf Section */}
       <section id="what-we-do" className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">Your Business Deserves Better Than Off-the-Shelf Software</h2>
-          
+          <h2 className="text-3xl w-1/2 mx-auto md:text-4xl font-bold text-center mb-6 text-gray-800">Your Business Deserves Better Than Off The Shelf Software</h2>
+          <p className="text-center w-1/2 mx-auto text-gray-600 mb-12">Businesses across the world spend billions per year on SaaS products. Think for one second: why would you pay so much every year if you could get us to build it and pay once?</p>
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
@@ -229,55 +229,6 @@ export default function Home() {
                     <p className="text-gray-600">{item.description}</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">Meet Our Team</h2>
-          <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-12">
-            Our team of experts is dedicated to creating custom software solutions that transform businesses.
-          </p>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              { 
-                name: 'John Smith', 
-                role: 'CEO & Founder', 
-                image: '/images/team/john.jpg',
-                bio: 'Over 15 years of experience in software development and business transformation.'
-              },
-              { 
-                name: 'Sarah Johnson', 
-                role: 'CTO', 
-                image: '/images/team/sarah.jpg',
-                bio: 'Expert in cloud architecture and enterprise software solutions.'
-              },
-              { 
-                name: 'Michael Brown', 
-                role: 'Lead Developer', 
-                image: '/images/team/michael.jpg',
-                bio: 'Full-stack developer specializing in scalable applications.'
-              },
-              // Add more team members as needed
-            ].map((member, i) => (
-              <div key={i} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 text-center">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
-                  <Image 
-                    src={member.image} 
-                    alt={member.name} 
-                    width={128} 
-                    height={128} 
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-1 text-gray-800">{member.name}</h3>
-                <p className="text-blue-600 font-medium mb-3">{member.role}</p>
-                <p className="text-gray-600">{member.bio}</p>
               </div>
             ))}
           </div>

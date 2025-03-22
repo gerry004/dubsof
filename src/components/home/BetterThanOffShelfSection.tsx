@@ -1,3 +1,5 @@
+'use client';
+
 export default function BetterThanOffShelfSection() {
   return (
     <section id="what-we-do" className="py-20 bg-white">

@@ -1,3 +1,5 @@
+'use client';
+
 import ScrollButton from '@/components/ScrollButton';
 
 export default function HeroSection() {

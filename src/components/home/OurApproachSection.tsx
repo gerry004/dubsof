@@ -1,3 +1,6 @@
+'use client';
+import { useEffect, useRef } from 'react';
+
 const APPROACH = [
   {
     title: 'Comprehensive Assessment',
@@ -24,27 +27,77 @@ const APPROACH = [
     description: "We'll help you take your business to the next level with our custom software solutions.",
   },
 ];  
+
 export default function OurApproachSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const cards = document.querySelectorAll('.approach-card');
+    cards.forEach((card, index) => {
+      // Add staggered animation delay
+      (card as HTMLElement).style.animationDelay = `${index * 0.15}s`;
+      observer.observe(card);
+    });
+
+    return () => {
+      cards.forEach((card) => {
+        observer.unobserve(card);
+      });
+    };
+  }, []);
+
   return (
-    <section className="py-20 bg-blue-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">Our Approach: Beyond Software Development</h2>
-        <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-12">
-          We're not just a software company—we're problem solvers and efficiency experts. 
-          Our process begins with understanding your business from the inside out:
-        </p>
+    <section ref={sectionRef} className="py-20 bg-twilight-blue text-white relative overflow-hidden">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-pattern opacity-10"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16 transform transition-all duration-700 opacity-0 animate-fade-in">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-white">
+            Our Approach: <span className="text-warm-orange">Beyond Software Development</span>
+          </h2>
+          <p className="text-center text-lg text-white max-w-3xl mx-auto">
+            We're not just a software company—we're problem solvers and efficiency experts. 
+            Our process begins with understanding your business from the inside out:
+          </p>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {APPROACH.map((item, i) => (
-            <div key={i} className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
-            <div className="w-12 h-12 border-2 border-blue-600 rounded-full flex items-center justify-center mb-4 text-blue-600 font-medium text-lg">{i + 1}</div>
-            <h3 className="text-xl font-bold mb-3 text-gray-800">{item.title}</h3>
-            <p className="text-gray-600">
-              {item.description}
-            </p>
-          </div>
-        ))}
+            <div 
+              key={i} 
+              className="approach-card bg-dusky-teal p-8 rounded-lg shadow-md border border-twilight-blue 
+                         transform transition-all duration-500 opacity-0 translate-y-8
+                         hover:shadow-xl hover:-translate-y-2"
+            >
+              <div className="w-16 h-16 border-2 border-warm-orange rounded-full flex items-center justify-center mb-6 
+                              text-warm-orange font-medium text-xl mx-auto
+                              transition-all duration-300 hover:scale-110 hover:bg-warm-orange hover:text-white">
+                {i + 1}
+              </div>
+              <h3 className="text-xl font-bold mb-4 text-sunset-peach text-center">{item.title}</h3>
+              <p className="text-gray-300 text-center">
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
+      
+      {/* Animated gradient accent */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 gradient-bg-animate"></div>
     </section>
   );
 } 

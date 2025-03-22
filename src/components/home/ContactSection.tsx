@@ -1,3 +1,4 @@
+"use client";
 export default function ContactSection() {
   return (
     <section id="contact" className="py-20 bg-blue-50">

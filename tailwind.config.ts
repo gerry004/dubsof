@@ -9,6 +9,11 @@ export default {
   theme: {
     extend: {
       colors: {
+        "twilight-blue": "var(--twilight-blue)",
+        "dusky-teal": "var(--dusky-teal)",
+        "warm-orange": "var(--warm-horizon-orange)",
+        "sunset-peach": "var(--sunset-peach)",
+        "silhouette": "var(--silhouette-charcoal)",
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: "var(--primary)",
@@ -20,6 +25,10 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
   },

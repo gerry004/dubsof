@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
+
 export default function WhyChooseUsSection() {
-  const features = [
+  const features = useMemo(() => [
     {
       title: "Personalised Integration",
       description: "We craft solutions that align perfectly with your unique workflows.",
@@ -54,7 +56,7 @@ export default function WhyChooseUsSection() {
         </svg>
       )
     }
-  ];
+  ], []);
 
   return (
     <section className="py-20 bg-white">

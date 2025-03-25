@@ -6,7 +6,7 @@ import BetterThanOffShelfSection from '@/components/home/BetterThanOffShelfSecti
 import OurApproachSection from '@/components/home/OurApproachSection';
 import WhyChooseUsSection from '@/components/home/WhyChooseUsSection';
 import ContactSection from '@/components/home/ContactSection';
-
+import AITransformationSection from '@/components/home/AITransformationSection';
 export default function Home() {
   return (
     <>
@@ -15,6 +15,7 @@ export default function Home() {
       <SecondHeroSection />
       <PartnersSection />
       {/* <CompanyIntroSection /> */}
+      <AITransformationSection />
       <BetterThanOffShelfSection />
       <OurApproachSection />
       <WhyChooseUsSection />

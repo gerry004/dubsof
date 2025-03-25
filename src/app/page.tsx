@@ -1,4 +1,5 @@
 import HeroSection from '@/components/home/HeroSection';
+import SecondHeroSection from '@/components/home/SecondHeroSection';
 import PartnersSection from '@/components/home/PartnersSection';
 import CompanyIntroSection from '@/components/home/CompanyIntroSection';
 import BetterThanOffShelfSection from '@/components/home/BetterThanOffShelfSection';
@@ -9,7 +10,8 @@ import ContactSection from '@/components/home/ContactSection';
 export default function Home() {
   return (
     <>
-      <HeroSection />
+      {/* <HeroSection backgroundImage="/images/background1.svg" /> */}
+      <SecondHeroSection />
       <PartnersSection />
       {/* <CompanyIntroSection /> */}
       <BetterThanOffShelfSection />

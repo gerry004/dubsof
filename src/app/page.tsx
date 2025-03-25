@@ -11,6 +11,7 @@ export default function Home() {
   return (
     <>
       {/* <HeroSection backgroundImage="/images/background1.svg" /> */}
+      <HeroSection />
       <SecondHeroSection />
       <PartnersSection />
       {/* <CompanyIntroSection /> */}

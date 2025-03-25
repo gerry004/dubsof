@@ -23,6 +23,9 @@ export default function Navbar() {
           <Link href="/#what-we-do" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">
             Our Approach
           </Link>
+          <Link href="/transform" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">
+            AI Transformation
+          </Link>
           <Link href="/team" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">
             Team
           </Link>

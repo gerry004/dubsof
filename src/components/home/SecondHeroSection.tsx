@@ -32,18 +32,18 @@ export default function SecondHeroSection() {
           
           {/* Colored divider */}
           <div className="flex mb-8">
-            <div className="h-1 w-60 bg-sunset-peach rounded"></div>
+            <div className="h-1 w-60 bg-warm-orange rounded"></div>
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Take Your SME<br />
-            To The <span className="text-twilight-blue relative">
+            To The <span className="text-warm-orange relative">
               Next Level
-              <span className="absolute -bottom-2 left-0 w-full h-1 bg-sunset-peach rounded-full opacity-70"></span>
+              <span className="absolute -bottom-2 left-0 w-full h-1 bg-warm-orange rounded-full"></span>
             </span>
           </h1>
           
-          <p className="text-lg md:text-xl mb-10 text-gray-200 max-w-2xl leading-relaxed">
+          <p className="text-lg md:text-xl mb-10 text-gray-50 max-w-2xl leading-relaxed">
             Our team of experts leverages cutting-edge technologies to create
             scalable, efficient, and future-proof software solutions for your business.
           </p>
@@ -51,7 +51,7 @@ export default function SecondHeroSection() {
           <div className="flex space-x-4">
             <ScrollButton 
               href="#what-we-do" 
-              className="px-8 py-4 bg-silhouette text-white font-medium rounded-md shadow-lg"
+              className="px-8 py-4 bg-warm-orange hover:opacity-90 text-white font-medium rounded-md shadow-lg"
             >
               Tell Me More
             </ScrollButton>

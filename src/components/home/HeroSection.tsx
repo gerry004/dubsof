@@ -38,9 +38,10 @@ export default function HeroSection({
     const tl = gsap.timeline();
     
     if (titleRef.current) {
-      const titleText = "The Dublin\nSoftware Co.";
+      // Set initial state to blank
       gsap.set(titleRef.current, { text: "" });
       
+      const titleText = "The Dublin\nSoftware Co.";
       tl.to(titleRef.current, {
         duration: 1.5,
         text: titleText,
@@ -50,33 +51,35 @@ export default function HeroSection({
     }
     
     if (subtitleRef.current) {
-      const subtitleText = "Eliminating inefficiency in SMEs with";
-      gsap.set(subtitleRef.current, { text: "" });
+      // Set initial state to blank
+      gsap.set(subtitleRef.current, { innerHTML: "" });
       
+      const subtitleText = "Eliminating inefficiency in SMEs with<br/>";
       tl.to(subtitleRef.current, {
         duration: 1,
         text: subtitleText,
         ease: "none",
       }, "+=0.2");
       
-      // Animate the span separately
-      const spanElement = subtitleRef.current.querySelector('span');
-      if (spanElement) {
-        const spanText = "AI powered custom systems";
-        gsap.set(spanElement, { text: "" });
+      // Add the colored span after the main text is complete
+      tl.add(() => {
+        const spanElement = document.createElement('span');
+        spanElement.className = "text-warm-orange";
+        subtitleRef.current?.appendChild(spanElement);
         
-        tl.to(spanElement, {
+        gsap.to(spanElement, {
           duration: 1,
-          text: spanText,
-          ease: "none",
-        }, "+=0.2");
-      }
+          text: "AI powered custom systems",
+          ease: "none"
+        });
+      });
     }
     
     if (descriptionRef.current) {
-      const descriptionText = "AI is changing at a blistering pace. Our team partners with you to find the best opportunities for AI-driven value and to build solutions that integrate seamlessly with your operations.";
+      // Set initial state to blank
       gsap.set(descriptionRef.current, { text: "" });
       
+      const descriptionText = "AI is changing at a blistering pace. Our team partners with you to find the best opportunities for AI-driven value and to build solutions that integrate seamlessly with your operations.";
       tl.to(descriptionRef.current, {
         duration: 2,
         text: descriptionText,
@@ -91,7 +94,7 @@ export default function HeroSection({
   
   return (
     <section 
-      className={`min-h-screen flex flex-col justify-between bg-gradient-to-b from-[#0a1e0a] to-black relative`}
+      className={`flex flex-col justify-between bg-gradient-to-b py-16 from-[#0a1e0a] to-black relative`}
       style={bgStyle}
       id="hero-section"
     >
@@ -128,8 +131,7 @@ export default function HeroSection({
               ref={subtitleRef}
               className="text-lg md:text-xl mb-4"
             >
-              Eliminating inefficiency in SMEs with<br />
-              <span className="text-warm-orange">AI powered custom systems</span>
+              {/* The content will be filled by GSAP */}
             </p>
             
             <div className="h-px bg-gray-500 w-full my-8"></div>

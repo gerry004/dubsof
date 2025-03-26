@@ -13,13 +13,9 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      {/* <SecondHeroSection /> */}
-      {/* <PartnersSection /> */}
       <AITransformation />
       {/* <AITransformationSection /> */}
-      {/* <BetterThanOffShelfSection /> */}
       <OurApproachSection />
-      {/* <WhyChooseUsSection /> */}
       <ContactSection />
     </>
   );

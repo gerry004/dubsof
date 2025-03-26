@@ -24,6 +24,7 @@ const AITransformation = () => {
   const contentCardRef = useRef<HTMLDivElement>(null);
   const jigsawRefs = useRef<(HTMLDivElement | null)[]>([]);
   const arrowRef = useRef<HTMLDivElement>(null);
+  const benefitsArrowRef = useRef<HTMLDivElement>(null);
 
   // Define jigsaw pieces with their initial scrambled and final positions
   const jigsawPieces: JigsawPiece[] = [
@@ -88,6 +89,12 @@ const AITransformation = () => {
 
     // Set initial state for arrow
     gsap.set(arrowRef.current, {
+      opacity: 0,
+      scaleY: 0
+    });
+
+    // Set initial state for benefits arrow
+    gsap.set(benefitsArrowRef.current, {
       opacity: 0,
       scaleY: 0
     });
@@ -178,6 +185,25 @@ const AITransformation = () => {
       ease: "power1.inOut"
     });
 
+    // Create a timeline for the benefits arrow animation
+    const benefitsArrowTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "center 60%",
+        end: "bottom 40%",
+        scrub: 1,
+        markers: false
+      }
+    });
+
+    // Animate the benefits arrow
+    benefitsArrowTl.to(benefitsArrowRef.current, {
+      opacity: 1,
+      scaleY: 1,
+      duration: 0.3,
+      ease: "power1.inOut"
+    });
+
     return () => {
       // Clean up ScrollTrigger instances
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -189,74 +215,124 @@ const AITransformation = () => {
       {/* Title */}
       <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">What We Do</h2>
       
-      {/* Problems Section */}
-      <div className="flex flex-col items-start mb-8 max-w-2xl w-full px-4">
-        <h3 className="text-2xl font-semibold text-white mb-6">We solve these common problems:</h3>
-        <ul className="space-y-4 w-full">
-          <li className="flex items-center text-white text-lg">
-            <span className="bg-red-500/20 p-3 rounded-full mr-4">
-              <FaClock className="text-red-400 text-xl" />
+      {/* Problems Section - Redesigned with containers */}
+      <div className="flex flex-col items-center mb-8 max-w-3xl w-full px-4 space-y-6">
+        {/* Problem 1 */}
+        <div className="w-full bg-black/40 backdrop-blur-sm rounded-lg border border-red-500/30 p-6 shadow-lg">
+          <div className="flex items-start gap-4">
+            <span className="bg-red-500/20 p-3 rounded-full shrink-0">
+              <FaClock className="text-red-400 text-2xl" />
             </span>
-            <span>100+ hours of wasted admin time every month</span>
-          </li>
-          <li className="flex items-center text-white text-lg">
-            <span className="bg-yellow-500/20 p-3 rounded-full mr-4">
-              <FaExclamationTriangle className="text-yellow-400 text-xl" />
+            <div>
+              <h3 className="text-red-400 text-2xl font-bold mb-2">100+ Wasted Admin Hours</h3>
+              <p className="text-white/80">Your team spends countless hours on repetitive tasks that could be automated, taking focus away from what really matters.</p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Problem 2 */}
+        <div className="w-full bg-black/40 backdrop-blur-sm rounded-lg border border-yellow-500/30 p-6 shadow-lg">
+          <div className="flex items-start gap-4">
+            <span className="bg-yellow-500/20 p-3 rounded-full shrink-0">
+              <FaExclamationTriangle className="text-yellow-400 text-2xl" />
             </span>
-            <span>Inefficient systems that don't talk to each other</span>
-          </li>
-          <li className="flex items-center text-white text-lg">
-            <span className="bg-blue-500/20 p-3 rounded-full mr-4">
-              <FaClipboardList className="text-blue-400 text-xl" />
+            <div>
+              <h3 className="text-yellow-400 text-2xl font-bold mb-2">Inefficient Systems</h3>
+              <p className="text-white/80">Your current systems don't communicate with each other, creating data silos and forcing manual data transfers between platforms.</p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Problem 3 */}
+        <div className="w-full bg-black/40 backdrop-blur-sm rounded-lg border border-blue-500/30 p-6 shadow-lg">
+          <div className="flex items-start gap-4">
+            <span className="bg-blue-500/20 p-3 rounded-full shrink-0">
+              <FaClipboardList className="text-blue-400 text-2xl" />
             </span>
-            <span>Too much busy work, not enough focus on growth</span>
-          </li>
-        </ul>
+            <div>
+              <h3 className="text-blue-400 text-2xl font-bold mb-2">Too Much Busy Work</h3>
+              <p className="text-white/80">Your business is stuck in maintenance mode, with no time or resources to focus on growth and innovation.</p>
+            </div>
+          </div>
+        </div>
       </div>
       
-      {/* Arrow connecting problems to solution */}
+      {/* Arrow connecting problems to solution - now connected to the last problem container */}
       <div 
         ref={arrowRef} 
-        className="w-2 h-24 bg-gradient-to-b from-white/30 to-green-400/70 my-4 rounded-full origin-top"
+        className="w-2 h-24 bg-gradient-to-b from-blue-400/70 to-green-400/70 my-4 rounded-full origin-top"
       ></div>
       
-      {/* Solution Title */}
-      <div className="mb-8 bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/20 max-w-md w-full text-center">
-        <h3 className="text-2xl font-bold text-green-400">AI-Powered Custom System</h3>
-      </div>
-      
-      {/* Background jigsaw animation - centered in viewport */}
-      <div className="flex items-center justify-center">
-        <div ref={jigsawContainerRef} className="relative w-[600px] h-[600px]">
-          {jigsawPieces.map((piece, index) => {
-            // Calculate position based on piece id
-            const getPosition = () => {
-              switch (piece.id) {
-                case 1: return "top-0 left-0";
-                case 2: return "top-0 right-0";
-                case 3: return "bottom-0 left-0";
-                case 4: return "bottom-0 right-0";
-                default: return "";
-              }
-            };
+      {/* Solution Container */}
+      <div className="mb-8 bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-green-500/30 max-w-3xl w-full shadow-lg">
+        <h3 className="text-3xl font-bold text-green-400 text-center mb-4">AI-Powered Custom System</h3>
+        <p className="text-white/80 text-center mb-6">
+          A unified platform tailored to your business that eliminates inefficiencies and automates repetitive tasks.
+        </p>
+        
+        {/* Jigsaw pieces inside the solution container */}
+        <div className="flex items-center justify-center">
+          <div ref={jigsawContainerRef} className="relative w-[600px] h-[600px]">
+            {jigsawPieces.map((piece, index) => {
+              // Calculate position based on piece id
+              const getPosition = () => {
+                switch (piece.id) {
+                  case 1: return "top-0 left-0";
+                  case 2: return "top-0 right-0";
+                  case 3: return "bottom-0 left-0";
+                  case 4: return "bottom-0 right-0";
+                  default: return "";
+                }
+              };
 
-            return (
-              <div
-                key={piece.id}
-                ref={el => {
-                  jigsawRefs.current[index] = el;
-                }}
-                className={`absolute w-[300px] h-[300px] ${getPosition()}`}
-              >
-                <div className="relative w-full h-full">
-                  {/* Jigsaw piece shape with tailwind */}
-                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-xl flex items-center justify-center p-6">
-                    <h3 className="text-white text-xl font-bold text-center">{piece.title}</h3>
+              return (
+                <div
+                  key={piece.id}
+                  ref={el => {
+                    jigsawRefs.current[index] = el;
+                  }}
+                  className={`absolute w-[300px] h-[300px] ${getPosition()}`}
+                >
+                  <div className="relative w-full h-full">
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-xl flex items-center justify-center p-6">
+                      <h3 className="text-white text-xl font-bold text-center">{piece.title}</h3>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      
+      {/* Arrow connecting solution to benefits */}
+      <div 
+        ref={benefitsArrowRef} 
+        className="w-2 h-24 bg-gradient-to-b from-green-400/70 to-purple-400/70 my-4 rounded-full origin-top"
+      ></div>
+      
+      {/* Benefits Section */}
+      <div className="max-w-3xl w-full px-4">
+        <div className="w-full bg-black/40 backdrop-blur-sm rounded-lg border border-purple-500/30 p-6 shadow-lg">
+          <h3 className="text-3xl font-bold text-purple-400 text-center mb-6">Benefits</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-black/30 p-4 rounded-lg border border-purple-500/20">
+              <h4 className="text-xl font-semibold text-white mb-2">Increased Efficiency</h4>
+              <p className="text-white/80">Automate repetitive tasks and streamline workflows</p>
+            </div>
+            <div className="bg-black/30 p-4 rounded-lg border border-purple-500/20">
+              <h4 className="text-xl font-semibold text-white mb-2">Better Decision Making</h4>
+              <p className="text-white/80">Access real-time data and insights across your business</p>
+            </div>
+            <div className="bg-black/30 p-4 rounded-lg border border-purple-500/20">
+              <h4 className="text-xl font-semibold text-white mb-2">Reduced Costs</h4>
+              <p className="text-white/80">Eliminate redundant systems and manual processes</p>
+            </div>
+            <div className="bg-black/30 p-4 rounded-lg border border-purple-500/20">
+              <h4 className="text-xl font-semibold text-white mb-2">Scalable Growth</h4>
+              <p className="text-white/80">Focus on innovation instead of maintenance</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

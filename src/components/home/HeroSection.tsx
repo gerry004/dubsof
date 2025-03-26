@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import ScrollButton from '@/components/ScrollButton';
 import PartnersSection from './PartnersSection';
 
 interface HeroSectionProps {
@@ -21,10 +20,12 @@ export default function HeroSection({
   } : {};
 
   const isSecondary = variant === 'secondary';
+
+  // bg-[#0a1e0a]
   
   return (
     <section 
-      className={`min-h-screen flex flex-col justify-between ${isSecondary ? 'bg-gray-50' : 'bg-[#0a1e0a]'}`}
+      className={`min-h-screen flex flex-col justify-between bg-[#0a1e0a]`}
       style={bgStyle}
     >
       <div className="flex flex-col md:flex-row h-full min-h-[80vh]">
@@ -54,8 +55,8 @@ export default function HeroSection({
               The Dublin<br />Software Co.
             </h1>
             <p className="text-lg md:text-xl mb-4">
-              Empowering large-scale<br />
-              organizations with <span className="text-yellow-400">AI expertise</span>
+              Eliminating inefficiency in SMEs with<br />
+              <span className="text-warm-orange">AI powered custom systems</span>
             </p>
             
             <div className="h-px bg-gray-500 w-full my-8"></div>
@@ -73,7 +74,7 @@ export default function HeroSection({
           {/* Former clients section */}
           <div className="mt-auto">
             <p className="text-sm uppercase tracking-wider text-gray-400 mb-4">
-              FORMERLY OF
+              OUR CLIENTS WORK WITH
             </p>
             <div className="w-full">
               <PartnersSection variant="dark" />

@@ -1,16 +1,38 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { TextPlugin } from 'gsap/TextPlugin';
 import { FaClock, FaRandom, FaRobot, FaChartLine } from 'react-icons/fa';
+import AITransformation from './AITransformation';
 
 // Register plugins
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, TextPlugin);
 }
 
-export default function AITransformationSection() {
+// Problem cards data for reuse
+const problemCardsData = [
+  {
+    icon: FaClock,
+    title: "100+ Wasted Admin Hours",
+    description: "Time spent on repetitive tasks that could be automated"
+  },
+  {
+    icon: FaRandom,
+    title: "Inefficient Systems",
+    description: "Disconnected tools and processes causing friction"
+  },
+  {
+    icon: FaRobot,
+    title: "Too Much Busy Work",
+    description: "Manual tasks that could be easily automated"
+  }
+];
+
+// Desktop version of the animation
+function DesktopAnimation() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const problemCardsRef = useRef<HTMLDivElement>(null);
   const problemLinesRef = useRef<HTMLDivElement>(null);
@@ -20,6 +42,14 @@ export default function AITransformationSection() {
   const transformationRef = useRef<HTMLDivElement>(null);
   const solutionLineRef = useRef<HTMLDivElement>(null);
   const solutionCardRef = useRef<HTMLDivElement>(null);
+  
+  // Refs for text streaming animation
+  const cardTitleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
+  const cardDescRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const transformationTitleRef = useRef<HTMLDivElement>(null);
+  const transformationSubtitleRef = useRef<HTMLHeadingElement>(null);
+  const solutionTitleRef = useRef<HTMLHeadingElement>(null);
+  const solutionDescRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -58,69 +88,166 @@ export default function AITransformationSection() {
       });
     }
 
-    // Set initial state for solution line
-    if (solutionLine) {
-      gsap.set(solutionLine, { scaleY: 0 });
+    // Set initial state for solution line and other elements
+    gsap.set(solutionLine, { scaleY: 0 });
+    gsap.set(transformation, { opacity: 0 });
+    gsap.set(solutionCard, { opacity: 0, y: 20 });
+    
+    // Set initial state for text elements
+    cardTitleRefs.current.forEach(el => {
+      if (el) gsap.set(el, { text: "" });
+    });
+    
+    cardDescRefs.current.forEach(el => {
+      if (el) gsap.set(el, { text: "" });
+    });
+    
+    if (transformationTitleRef.current) {
+      gsap.set(transformationTitleRef.current, { text: "" });
+    }
+    
+    if (transformationSubtitleRef.current) {
+      gsap.set(transformationSubtitleRef.current, { text: "" });
+    }
+    
+    if (solutionTitleRef.current) {
+      gsap.set(solutionTitleRef.current, { text: "" });
+    }
+    
+    if (solutionDescRef.current) {
+      gsap.set(solutionDescRef.current, { text: "" });
     }
 
     // Create a timeline for the animation
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: true, // Smooth scrubbing for precise scroll control
-        pin: '.pin-container',
-        anticipatePin: 1,
+        start: "top 80%", // Start animation when the top of the section hits 80% from the top of viewport
+        end: "bottom 20%", // End animation when the bottom of the section hits 20% from the top of viewport
+        scrub: 1, // Smooth scrubbing with a 1 second delay
         markers: false,
       }
     });
 
-    // Animation sequence
+    // Animation sequence - more evenly distributed
     tl
-    // Problem cards are already visible
-    .to({}, { duration: 0.1 }) // Small delay
+    // Problem cards text streaming
+    .to(cardTitleRefs.current[0], {
+      text: problemCardsData[0].title,
+      duration: 0.1,
+      ease: "none"
+    }, 0)
+    .to(cardDescRefs.current[0], {
+      text: problemCardsData[0].description,
+      duration: 0.1,
+      ease: "none"
+    }, 0.05)
+    
+    .to(cardTitleRefs.current[1], {
+      text: problemCardsData[1].title,
+      duration: 0.1,
+      ease: "none"
+    }, 0.1)
+    .to(cardDescRefs.current[1], {
+      text: problemCardsData[1].description,
+      duration: 0.1,
+      ease: "none"
+    }, 0.15)
+    
+    .to(cardTitleRefs.current[2], {
+      text: problemCardsData[2].title,
+      duration: 0.1,
+      ease: "none"
+    }, 0.2)
+    .to(cardDescRefs.current[2], {
+      text: problemCardsData[2].description,
+      duration: 0.1,
+      ease: "none"
+    }, 0.25)
     
     // Draw the problem lines as user scrolls
     .to(leftLine, {
       strokeDashoffset: 0,
-      duration: 0.2,
-      ease: "none"
-    }, 0.1)
+      duration: 0.1,
+      ease: "power1.inOut"
+    }, 0.3)
     
     .to(middleLine, {
       strokeDashoffset: 0,
-      duration: 0.2,
-      ease: "none"
-    }, 0.1)
+      duration: 0.1,
+      ease: "power1.inOut"
+    }, 0.35)
     
     .to(rightLine, {
       strokeDashoffset: 0,
-      duration: 0.2,
-      ease: "none"
-    }, 0.1)
+      duration: 0.1,
+      ease: "power1.inOut"
+    }, 0.4)
     
     // Show transformation
     .to(transformation, { 
       opacity: 1,
-      duration: 0.2,
+      duration: 0.1,
+      ease: "power1.inOut"
+    }, 0.45)
+    
+    // Transformation text streaming
+    .to(transformationTitleRef.current, {
+      text: "AI Powered Custom\nSystem",
+      duration: 0.1,
       ease: "none"
-    }, 0.3)
+    }, 0.5)
+    
+    .to(transformationSubtitleRef.current, {
+      text: "Crafted for your business by the Dublin Software Company",
+      duration: 0.1,
+      ease: "none"
+    }, 0.55)
     
     // Grow the solution line
     .to(solutionLine, {
       scaleY: 1,
-      duration: 0.2,
-      ease: "none"
-    }, 0.5)
+      duration: 0.1,
+      ease: "power1.inOut"
+    }, 0.6)
     
     // Show solution card
     .to(solutionCard, {
       opacity: 1,
       y: 0,
-      duration: 0.2,
+      duration: 0.1,
+      ease: "power1.inOut"
+    }, 0.65)
+    
+    // Solution text streaming
+    .to(solutionTitleRef.current, {
+      text: "A Cohesive System for Your Business",
+      duration: 0.1,
       ease: "none"
-    }, 0.7);
+    }, 0.7)
+    
+    .to(solutionDescRef.current, {
+      text: "Streamlined workflows, automated processes, and intelligent insights that save time and increase productivity",
+      duration: 0.1,
+      ease: "none"
+    }, 0.75);
+
+    // Create background color transition
+    gsap.fromTo(
+      section.parentElement, 
+      { 
+        backgroundColor: "rgba(10, 30, 10, 1)" // Match HeroSection bg-[#0a1e0a]
+      },
+      {
+        backgroundColor: "rgba(0, 0, 0, 1)", // Black
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom",
+          end: "top 70%",
+          scrub: true,
+        }
+      }
+    );
 
     return () => {
       // Clean up
@@ -132,140 +259,414 @@ export default function AITransformationSection() {
   }, []);
 
   return (
-    <section 
+    <div 
       ref={sectionRef}
-      className="relative min-h-[300vh] bg-black text-white overflow-hidden"
-      aria-label="AI Transformation Visualization"
+      className="w-full max-w-6xl mx-auto px-4 py-16 relative"
     >
-      {/* Pinned container for the animation */}
-      <div className="pin-container min-h-screen flex items-center justify-center">
-        <div className="w-full max-w-6xl mx-auto px-4 relative flex flex-col items-center justify-center">
+      {/* Problem Cards */}
+      <div 
+        ref={problemCardsRef}
+        className="w-full grid grid-cols-3 gap-6 mb-12"
+      >
+        {problemCardsData.map((card, index) => (
+          <div key={index} className="bg-gradient-to-br from-red-900/40 to-red-800/20 p-6 rounded-xl border border-red-800/50 flex flex-col items-center text-center">
+            <div className="w-16 h-16 bg-red-700/30 rounded-full flex items-center justify-center mb-4">
+              <card.icon className="text-red-400 text-3xl" />
+            </div>
+            <h3 
+              ref={el => cardTitleRefs.current[index] = el}
+              className="text-xl md:text-2xl font-bold mb-3"
+            ></h3>
+            <p 
+              ref={el => cardDescRefs.current[index] = el}
+              className="text-gray-400"
+            ></p>
+          </div>
+        ))}
+      </div>
+
+      {/* Problem Lines */}
+      <div 
+        ref={problemLinesRef}
+        className="relative h-32 w-full mb-12"
+      >
+        <svg className="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
+          {/* Left line */}
+          <path 
+            ref={leftLineRef}
+            d="M 50,0 L 50,50 L 150,80" 
+            stroke="#7c3aed" 
+            strokeWidth="3" 
+            fill="none"
+            strokeLinecap="round"
+          />
           
-          {/* Problem Cards */}
-          <div 
-            ref={problemCardsRef}
-            className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 my-8"
-          >
-            {/* Card 1 */}
-            <div className="bg-gradient-to-br from-red-900/40 to-red-800/20 p-6 rounded-xl border border-red-800/50 flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-red-700/30 rounded-full flex items-center justify-center mb-4">
-                <FaClock className="text-red-400 text-3xl" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-3">100+ Wasted Admin Hours</h3>
-              <p className="text-gray-400">Time spent on repetitive tasks that could be automated</p>
-            </div>
-            
-            {/* Card 2 */}
-            <div className="bg-gradient-to-br from-red-900/40 to-red-800/20 p-6 rounded-xl border border-red-800/50 flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-red-700/30 rounded-full flex items-center justify-center mb-4">
-                <FaRandom className="text-red-400 text-3xl" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-3">Inefficient Systems</h3>
-              <p className="text-gray-400">Disconnected tools and processes causing friction</p>
-            </div>
-            
-            {/* Card 3 */}
-            <div className="bg-gradient-to-br from-red-900/40 to-red-800/20 p-6 rounded-xl border border-red-800/50 flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-red-700/30 rounded-full flex items-center justify-center mb-4">
-                <FaRobot className="text-red-400 text-3xl" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-3">Too Much Busy Work</h3>
-              <p className="text-gray-400">Manual tasks that could be easily automated</p>
-            </div>
-          </div>
-
-          {/* Problem Lines */}
-          <div 
-            ref={problemLinesRef}
-            className="relative h-32 w-full mb-8"
-          >
-            <svg className="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
-              {/* Left line */}
-              <path 
-                ref={leftLineRef}
-                d="M 50,0 L 50,50 L 150,80" 
-                stroke="#7c3aed" 
-                strokeWidth="3" 
-                fill="none"
-                strokeLinecap="round"
-              />
-              
-              {/* Middle line */}
-              <path 
-                ref={middleLineRef}
-                d="M 150,0 L 150,80" 
-                stroke="#7c3aed" 
-                strokeWidth="3" 
-                fill="none"
-                strokeLinecap="round"
-              />
-              
-              {/* Right line */}
-              <path 
-                ref={rightLineRef}
-                d="M 250,0 L 250,50 L 150,80" 
-                stroke="#7c3aed" 
-                strokeWidth="3" 
-                fill="none"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-
-          {/* AI Transformation */}
-          <div 
-            ref={transformationRef}
-            className="w-full text-center mb-8 opacity-0"
-          >
-            <div className="relative w-64 h-64 mx-auto mb-8">
-              <div className="absolute inset-0 rounded-full opacity-20 animate-pulse"
-                   style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.8) 0%, rgba(124,58,237,0.4) 70%, rgba(139,92,246,0.1) 100%)' }}>
-              </div>
-              <div className="absolute inset-4 rounded-full opacity-30 animate-pulse"
-                   style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.8) 0%, rgba(124,58,237,0.5) 70%, rgba(139,92,246,0.2) 100%)', animationDelay: '0.3s' }}>
-              </div>
-              <div className="absolute inset-8 rounded-full opacity-40 animate-pulse"
-                   style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.9) 0%, rgba(124,58,237,0.6) 70%, rgba(139,92,246,0.3) 100%)', animationDelay: '0.6s' }}>
-              </div>
-              <div className="absolute inset-12 rounded-full opacity-50 animate-pulse"
-                   style={{ background: 'radial-gradient(circle, rgba(79,70,229,1) 0%, rgba(124,58,237,0.7) 70%, rgba(139,92,246,0.4) 100%)', animationDelay: '0.9s' }}>
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-white text-opacity-90 font-bold text-xl text-center px-4">
-                  AI Powered Custom<br />System
-                </div>
-              </div>
-            </div>
-            <h3 className="text-2xl md:text-4xl font-bold text-blue-400">
-              Crafted for your business by the Dublin Software Company
-            </h3>
-          </div>
-
-          {/* Solution Line */}
-          <div 
-            ref={solutionLineRef}
-            className="h-32 w-2 mb-8 bg-green-500 origin-top"
-          ></div>
-
-          {/* Solution Card */}
-          <div 
-            ref={solutionCardRef}
-            className="w-full max-w-2xl transform translate-y-10 opacity-0 my-8"
-            style={{ transitionProperty: 'transform, opacity' }}
-          >
-            <div className="bg-gradient-to-br from-green-900/40 to-green-800/20 p-8 rounded-xl border border-green-700/50 flex items-center">
-              <div className="w-20 h-20 bg-green-700/30 rounded-full flex items-center justify-center mr-6 flex-shrink-0">
-                <FaChartLine className="text-green-400 text-4xl" />
-              </div>
-              <div>
-                <h3 className="text-2xl md:text-3xl font-bold mb-3">A Cohesive System for Your Business</h3>
-                <p className="text-gray-300">Streamlined workflows, automated processes, and intelligent insights that save time and increase productivity</p>
-              </div>
-            </div>
-          </div>
+          {/* Middle line */}
+          <path 
+            ref={middleLineRef}
+            d="M 150,0 L 150,80" 
+            stroke="#7c3aed" 
+            strokeWidth="3" 
+            fill="none"
+            strokeLinecap="round"
+          />
           
+          {/* Right line */}
+          <path 
+            ref={rightLineRef}
+            d="M 250,0 L 250,50 L 150,80" 
+            stroke="#7c3aed" 
+            strokeWidth="3" 
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
+
+      {/* AI Transformation */}
+      <div 
+        ref={transformationRef}
+        className="w-full text-center mb-12"
+      >
+        <div className="relative w-64 h-64 mx-auto mb-8">
+          <div className="absolute inset-0 rounded-full opacity-20 animate-pulse"
+               style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.8) 0%, rgba(124,58,237,0.4) 70%, rgba(139,92,246,0.1) 100%)' }}>
+          </div>
+          <div className="absolute inset-4 rounded-full opacity-30 animate-pulse"
+               style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.8) 0%, rgba(124,58,237,0.5) 70%, rgba(139,92,246,0.2) 100%)', animationDelay: '0.3s' }}>
+          </div>
+          <div className="absolute inset-8 rounded-full opacity-40 animate-pulse"
+               style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.9) 0%, rgba(124,58,237,0.6) 70%, rgba(139,92,246,0.3) 100%)', animationDelay: '0.6s' }}>
+          </div>
+          <div className="absolute inset-12 rounded-full opacity-50 animate-pulse"
+               style={{ background: 'radial-gradient(circle, rgba(79,70,229,1) 0%, rgba(124,58,237,0.7) 70%, rgba(139,92,246,0.4) 100%)', animationDelay: '0.9s' }}>
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div 
+              ref={transformationTitleRef}
+              className="text-white text-opacity-90 font-bold text-xl text-center px-4 whitespace-pre-line"
+            ></div>
+          </div>
+        </div>
+        <h3 
+          ref={transformationSubtitleRef}
+          className="text-lg md:text-2xl font-bold text-blue-400"
+        ></h3>
+      </div>
+
+      {/* Solution Line */}
+      <div 
+        ref={solutionLineRef}
+        className="h-32 w-2 mx-auto mb-12 bg-green-500 origin-top"
+      ></div>
+
+      {/* Solution Card */}
+      <div 
+        ref={solutionCardRef}
+        className="w-full max-w-2xl mx-auto mb-12"
+      >
+        <div className="bg-gradient-to-br from-green-900/40 to-green-800/20 p-8 rounded-xl border border-green-700/50 flex items-center">
+          <div className="w-20 h-20 bg-green-700/30 rounded-full flex items-center justify-center mr-6 flex-shrink-0">
+            <FaChartLine className="text-green-400 text-4xl" />
+          </div>
+          <div>
+            <h3 
+              ref={solutionTitleRef}
+              className="text-2xl md:text-3xl font-bold mb-3"
+            ></h3>
+            <p 
+              ref={solutionDescRef}
+              className="text-gray-300"
+            ></p>
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Mobile version of the animation
+function MobileAnimation() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const problemCardsRef = useRef<HTMLDivElement>(null);
+  const transformationRef = useRef<HTMLDivElement>(null);
+  const solutionCardRef = useRef<HTMLDivElement>(null);
+  
+  // Refs for text streaming animation
+  const cardTitleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
+  const cardDescRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const transformationTitleRef = useRef<HTMLDivElement>(null);
+  const transformationSubtitleRef = useRef<HTMLHeadingElement>(null);
+  const solutionTitleRef = useRef<HTMLHeadingElement>(null);
+  const solutionDescRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const section = sectionRef.current;
+    const problemCards = problemCardsRef.current;
+    const transformation = transformationRef.current;
+    const solutionCard = solutionCardRef.current;
+
+    // Set initial states
+    gsap.set(transformation, { opacity: 0, y: 20 });
+    gsap.set(solutionCard, { opacity: 0, y: 20 });
+    
+    // Set initial state for text elements
+    cardTitleRefs.current.forEach(el => {
+      if (el) gsap.set(el, { text: "" });
+    });
+    
+    cardDescRefs.current.forEach(el => {
+      if (el) gsap.set(el, { text: "" });
+    });
+    
+    if (transformationTitleRef.current) {
+      gsap.set(transformationTitleRef.current, { text: "" });
+    }
+    
+    if (transformationSubtitleRef.current) {
+      gsap.set(transformationSubtitleRef.current, { text: "" });
+    }
+    
+    if (solutionTitleRef.current) {
+      gsap.set(solutionTitleRef.current, { text: "" });
+    }
+    
+    if (solutionDescRef.current) {
+      gsap.set(solutionDescRef.current, { text: "" });
+    }
+
+    // Create a timeline for the animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%", // Start animation when the top of the section hits 80% from the top of viewport
+        end: "bottom 20%", // End animation when the bottom of the section hits 20% from the top of viewport
+        scrub: 1, // Smooth scrubbing with a 1 second delay
+        markers: false,
+      }
+    });
+
+    // Animation sequence
+    tl
+    // Problem cards text streaming
+    .to(cardTitleRefs.current[0], {
+      text: problemCardsData[0].title,
+      duration: 0.1,
+      ease: "none"
+    }, 0)
+    .to(cardDescRefs.current[0], {
+      text: problemCardsData[0].description,
+      duration: 0.1,
+      ease: "none"
+    }, 0.05)
+    
+    .to(cardTitleRefs.current[1], {
+      text: problemCardsData[1].title,
+      duration: 0.1,
+      ease: "none"
+    }, 0.1)
+    .to(cardDescRefs.current[1], {
+      text: problemCardsData[1].description,
+      duration: 0.1,
+      ease: "none"
+    }, 0.15)
+    
+    .to(cardTitleRefs.current[2], {
+      text: problemCardsData[2].title,
+      duration: 0.1,
+      ease: "none"
+    }, 0.2)
+    .to(cardDescRefs.current[2], {
+      text: problemCardsData[2].description,
+      duration: 0.1,
+      ease: "none"
+    }, 0.25)
+    
+    // Show transformation
+    .to(transformation, { 
+      opacity: 1,
+      y: 0,
+      duration: 0.1,
+      ease: "power1.inOut"
+    }, 0.3)
+    
+    // Transformation text streaming
+    .to(transformationTitleRef.current, {
+      text: "AI Powered Custom\nSystem",
+      duration: 0.1,
+      ease: "none"
+    }, 0.35)
+    
+    .to(transformationSubtitleRef.current, {
+      text: "Crafted for your business by the Dublin Software Company",
+      duration: 0.1,
+      ease: "none"
+    }, 0.4)
+    
+    // Show solution card
+    .to(solutionCard, {
+      opacity: 1,
+      y: 0,
+      duration: 0.1,
+      ease: "power1.inOut"
+    }, 0.45)
+    
+    // Solution text streaming
+    .to(solutionTitleRef.current, {
+      text: "A Cohesive System for Your Business",
+      duration: 0.1,
+      ease: "none"
+    }, 0.5)
+    
+    .to(solutionDescRef.current, {
+      text: "Streamlined workflows, automated processes, and intelligent insights that save time and increase productivity",
+      duration: 0.1,
+      ease: "none"
+    }, 0.55);
+
+    // Create background color transition
+    gsap.fromTo(
+      section.parentElement, 
+      { 
+        backgroundColor: "rgba(10, 30, 10, 1)" // Match HeroSection bg-[#0a1e0a]
+      },
+      {
+        backgroundColor: "rgba(0, 0, 0, 1)", // Black
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom",
+          end: "top 70%",
+          scrub: true,
+        }
+      }
+    );
+
+    return () => {
+      // Clean up
+      if (tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
+      tl.kill();
+    };
+  }, []);
+
+  return (
+    <div 
+      ref={sectionRef}
+      className="w-full max-w-6xl mx-auto px-4 py-12 relative"
+    >
+      {/* Problem Cards */}
+      <div 
+        ref={problemCardsRef}
+        className="w-full grid grid-cols-1 gap-6 mb-12"
+      >
+        {problemCardsData.map((card, index) => (
+          <div key={index} className="bg-gradient-to-br from-red-900/40 to-red-800/20 p-6 rounded-xl border border-red-800/50 flex flex-col items-center text-center">
+            <div className="w-16 h-16 bg-red-700/30 rounded-full flex items-center justify-center mb-4">
+              <card.icon className="text-red-400 text-3xl" />
+            </div>
+            <h3 
+              ref={el => cardTitleRefs.current[index] = el}
+              className="text-xl font-bold mb-3"
+            ></h3>
+            <p 
+              ref={el => cardDescRefs.current[index] = el}
+              className="text-gray-400"
+            ></p>
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile connector line */}
+      <div className="w-2 h-16 bg-purple-600 mx-auto mb-12"></div>
+
+      {/* AI Transformation */}
+      <div 
+        ref={transformationRef}
+        className="w-full text-center mb-12"
+      >
+        <div className="relative w-48 h-48 mx-auto mb-6">
+          <div className="absolute inset-0 rounded-full opacity-20 animate-pulse"
+               style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.8) 0%, rgba(124,58,237,0.4) 70%, rgba(139,92,246,0.1) 100%)' }}>
+          </div>
+          <div className="absolute inset-4 rounded-full opacity-30 animate-pulse"
+               style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.8) 0%, rgba(124,58,237,0.5) 70%, rgba(139,92,246,0.2) 100%)', animationDelay: '0.3s' }}>
+          </div>
+          <div className="absolute inset-8 rounded-full opacity-40 animate-pulse"
+               style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.9) 0%, rgba(124,58,237,0.6) 70%, rgba(139,92,246,0.3) 100%)', animationDelay: '0.6s' }}>
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div 
+              ref={transformationTitleRef}
+              className="text-white text-opacity-90 font-bold text-lg text-center px-4 whitespace-pre-line"
+            ></div>
+          </div>
+        </div>
+        <h3 
+          ref={transformationSubtitleRef}
+          className="text-xl font-bold text-blue-400"
+        ></h3>
+      </div>
+
+      {/* Mobile connector line */}
+      <div className="w-2 h-16 bg-green-500 mx-auto mb-12"></div>
+
+      {/* Solution Card */}
+      <div 
+        ref={solutionCardRef}
+        className="w-full mb-12"
+      >
+        <div className="bg-gradient-to-br from-green-900/40 to-green-800/20 p-6 rounded-xl border border-green-700/50">
+          <div className="w-16 h-16 bg-green-700/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <FaChartLine className="text-green-400 text-3xl" />
+          </div>
+          <h3 
+            ref={solutionTitleRef}
+            className="text-xl font-bold mb-3 text-center"
+          ></h3>
+          <p 
+            ref={solutionDescRef}
+            className="text-gray-300 text-center"
+          ></p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function AITransformationSection() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if we're on the client side
+    if (typeof window !== 'undefined') {
+      // Initial check
+      setIsMobile(window.innerWidth < 768);
+
+      // Add resize listener
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 768);
+      };
+
+      window.addEventListener('resize', handleResize);
+      
+      // Cleanup
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
+
+  return (
+    <section 
+      id="ai-transformation"
+      className="relative bg-black text-white overflow-hidden transition-colors duration-1000"
+      aria-label="AI Transformation Visualization"
+    >
+      <AITransformation />
+      {isMobile ? <MobileAnimation /> : <DesktopAnimation />}
     </section>
   );
 }

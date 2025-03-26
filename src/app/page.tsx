@@ -7,16 +7,19 @@ import OurApproachSection from '@/components/home/OurApproachSection';
 import WhyChooseUsSection from '@/components/home/WhyChooseUsSection';
 import ContactSection from '@/components/home/ContactSection';
 import AITransformationSection from '@/components/home/AITransformationSection';
+import AITransformation from '@/components/home/AITransformation';
+
 export default function Home() {
   return (
     <>
       <HeroSection />
       {/* <SecondHeroSection /> */}
       {/* <PartnersSection /> */}
-      <AITransformationSection />
-      <BetterThanOffShelfSection />
+      <AITransformation />
+      {/* <AITransformationSection /> */}
+      {/* <BetterThanOffShelfSection /> */}
       <OurApproachSection />
-      <WhyChooseUsSection />
+      {/* <WhyChooseUsSection /> */}
       <ContactSection />
     </>
   );

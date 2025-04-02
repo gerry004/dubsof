@@ -40,83 +40,110 @@ export default function OurApproachSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<Array<RefObject<HTMLDivElement | null>>>([]);
+  const contentRefs = useRef<Array<RefObject<HTMLDivElement | null>>>([]);
 
   useEffect(() => {
     if (!sectionRef.current) return;
     
-    // Initialize the refs array
+    // Initialize the refs arrays
     itemsRef.current = Array(APPROACH.length)
       .fill(null)
       .map(() => React.createRef<HTMLDivElement>());
+      
+    contentRefs.current = Array(APPROACH.length)
+      .fill(null)
+      .map(() => React.createRef<HTMLDivElement>());
 
-    // Create a timeline for sequential animation
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 70%",
-        end: "bottom 20%",
-        scrub: 1,
-        pin: false,
+    // Create a master timeline
+    const master = gsap.timeline();
+    
+    // More robust timeline animation with a single ScrollTrigger
+    const scrollTrigger = {
+      trigger: sectionRef.current,
+      start: "top 80%",
+      end: "bottom 20%",
+      scrub: 0.5,
+      pin: false,
+      onUpdate: (self: any) => {
+        // Smoothly animate the timeline height based on scroll progress
+        if (timelineRef.current) {
+          const progress = Math.max(0, Math.min(1, self.progress)); // Clamp between 0 and 1
+          gsap.to(timelineRef.current, {
+            height: `${progress * 100}%`,
+            opacity: 0.5 + (progress * 0.5),
+            duration: 0.1,
+            ease: "none",
+            overwrite: "auto"
+          });
+        }
       }
-    });
-
-    // Animate timeline items on scroll
+    };
+    
+    // Set initial states for all elements
+    gsap.set(timelineRef.current, { height: 0, opacity: 0.5 });
+    
+    // Create individual timelines for each item with staggered reveal
     itemsRef.current.forEach((itemRef, index) => {
       const item = itemRef.current;
-      if (!item) return;
+      const content = contentRefs.current[index]?.current;
       
-      // Set initial state
-      gsap.set(item, { 
-        opacity: 0,
-        x: index % 2 === 0 ? -50 : 50 
-      });
+      if (!item || !content) return;
       
-      // Add to timeline with staggered start times
-      tl.to(item, {
-        opacity: 1,
-        x: 0,
-        duration: 0.4,
-        ease: "power2.out",
-      }, index * 0.2); // Stagger the animations
-    });
-    
-    // Improved timeline animation
-    if (timelineRef.current) {
-      gsap.set(timelineRef.current, { 
-        height: 0,
-        opacity: 0.5
-      });
+      // Set initial states
+      gsap.set(item, { opacity: 0, y: 30 });
+      gsap.set(content, { opacity: 0, scale: 0.9 });
       
-      // Create a separate ScrollTrigger for the timeline to make it more seamless
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 80%", // Start earlier
-        end: "bottom 20%",
-        scrub: true,
-        onUpdate: (self) => {
-          // Smoothly animate the timeline height based on scroll progress
-          if (timelineRef.current) {
-            gsap.to(timelineRef.current, {
-              height: `${self.progress * 100}%`,
-              opacity: 0.5 + (self.progress * 0.5), // Gradually increase opacity
-              duration: 0.1, // Short duration for smoother updates
-              ease: "none",
-              overwrite: true
-            });
+      // Calculate when this item should appear based on scroll progress
+      const startPosition = index / (APPROACH.length - 1);
+      const endPosition = (index + 1) / APPROACH.length;
+      
+      // Create a timeline for this item
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          ...scrollTrigger,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            
+            // Only animate this item when scroll is in its range
+            if (progress >= startPosition && progress <= endPosition) {
+              const itemProgress = (progress - startPosition) / (endPosition - startPosition);
+              
+              // Fade in the item
+              gsap.to(item, {
+                opacity: itemProgress,
+                y: 30 - (itemProgress * 30),
+                duration: 0.1,
+                overwrite: "auto"
+              });
+              
+              // Fade in and scale up the content
+              gsap.to(content, {
+                opacity: itemProgress,
+                scale: 0.9 + (itemProgress * 0.1),
+                duration: 0.1,
+                overwrite: "auto"
+              });
+            }
           }
         }
       });
-    }
+      
+      master.add(tl, 0);
+    });
+    
+    // Create the main ScrollTrigger
+    ScrollTrigger.create(scrollTrigger);
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      master.kill();
     };
   }, []);
 
   return (
     <section 
       ref={sectionRef} 
-      className="py-20 bg-gradient-to-b from-[#0a1e0a] via-[#0a1e0a] to-black text-white relative overflow-hidden"
+      className="py-20 bg-gradient-to-b from-black via-[#0a1e0a] to-black text-white relative overflow-hidden"
     >
       {/* Background pattern */}
       <div className="absolute inset-0 bg-pattern opacity-10"></div>
@@ -157,7 +184,10 @@ export default function OurApproachSection() {
                 
                 {/* Content card */}
                 <div className={`w-full md:w-5/12 ${i % 2 === 0 ? 'md:pr-12 px-4' : 'md:pl-12 px-4'}`}>
-                  <div className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                  <div 
+                    ref={contentRefs.current[i] || null}
+                    className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                  >
                     <h3 className="text-xl font-bold mb-3 text-warm-orange">{item.title}</h3>
                     <p className="text-gray-300">
                       {item.description}
@@ -169,9 +199,6 @@ export default function OurApproachSection() {
           })}
         </div>
       </div>
-      
-      {/* Animated gradient accent */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 gradient-bg-animate"></div>
     </section>
   );
 } 

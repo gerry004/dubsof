@@ -5,6 +5,7 @@ import PartnersSection from './PartnersSection';
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Register TextPlugin
 if (typeof window !== 'undefined') {
@@ -87,8 +88,47 @@ export default function HeroSection({
       }, "+=0.3");
     }
     
+    // Animate the horizontal divider
+    const dividerRef = document.querySelector('#hero-section .h-px.bg-gray-500');
+    if (dividerRef) {
+      gsap.set(dividerRef, { width: 0 });
+      
+      tl.to(dividerRef, {
+        width: '100%',
+        duration: 1,
+        ease: "power1.inOut",
+      }, "+=0.2");
+    }
+    
     return () => {
       tl.kill();
+    };
+  }, []);
+  
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const verticalLine = document.querySelector('#hero-section .w-px.bg-gray-500.h-full');
+    if (!verticalLine) return;
+    
+    // Create a ScrollTrigger for the vertical line
+    ScrollTrigger.create({
+      trigger: '#hero-section',
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      onUpdate: (self) => {
+        // Adjust opacity based on scroll position
+        gsap.to(verticalLine, {
+          opacity: 1 - (self.progress * 0.7), // Fade out as you scroll down
+          duration: 0.1,
+          overwrite: "auto"
+        });
+      }
+    });
+    
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
   

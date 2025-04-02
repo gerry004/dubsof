@@ -8,7 +8,7 @@ export default function ContactSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">          
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           <div>
-            <div className="inline-block px-4 py-1 my-2 bg-warm-orange bg-opacity-20 rounded-full text-warm-orange font-medium text-sm">
+            <div className="inline-block px-4 py-1 my-4 border border-warm-orange text-white rounded-full text-warm-orange font-medium text-sm">
               Contact Us
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
@@ -101,9 +101,6 @@ export default function ContactSection() {
           </div>
         </div>
       </div>
-      
-      {/* Animated gradient accent */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 gradient-bg-animate"></div>
     </section>
   );
 } 

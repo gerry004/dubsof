@@ -54,7 +54,7 @@ const AITransformation = () => {
 
   return (
     <div ref={containerRef} className="relative min-h-[100vh] overflow-hidden bg-gradient-to-b from-black via-[#0a1e0a] to-black flex flex-col items-center justify-start pt-16 pb-24">
-      <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">What We Do</h2>
+      <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-12">Business Transformation with AI</h2>
       <ProblemSection />
       <div 
         ref={arrowRef} 

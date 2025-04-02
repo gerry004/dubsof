@@ -1,5 +1,13 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, createRef, RefObject } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
+
+// Register ScrollTrigger
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const APPROACH = [
   {
@@ -30,41 +38,91 @@ const APPROACH = [
 
 export default function OurApproachSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const itemsRef = useRef<Array<RefObject<HTMLDivElement | null>>>([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    if (!sectionRef.current) return;
+    
+    // Initialize the refs array
+    itemsRef.current = Array(APPROACH.length)
+      .fill(null)
+      .map(() => React.createRef<HTMLDivElement>());
 
-    const cards = document.querySelectorAll('.approach-card');
-    cards.forEach((card, index) => {
-      // Add staggered animation delay
-      (card as HTMLElement).style.animationDelay = `${index * 0.15}s`;
-      observer.observe(card);
+    // Create a timeline for sequential animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 70%",
+        end: "bottom 20%",
+        scrub: 1,
+        pin: false,
+      }
     });
 
-    return () => {
-      cards.forEach((card) => {
-        observer.unobserve(card);
+    // Animate timeline items on scroll
+    itemsRef.current.forEach((itemRef, index) => {
+      const item = itemRef.current;
+      if (!item) return;
+      
+      // Set initial state
+      gsap.set(item, { 
+        opacity: 0,
+        x: index % 2 === 0 ? -50 : 50 
       });
+      
+      // Add to timeline with staggered start times
+      tl.to(item, {
+        opacity: 1,
+        x: 0,
+        duration: 0.4,
+        ease: "power2.out",
+      }, index * 0.2); // Stagger the animations
+    });
+    
+    // Improved timeline animation
+    if (timelineRef.current) {
+      gsap.set(timelineRef.current, { 
+        height: 0,
+        opacity: 0.5
+      });
+      
+      // Create a separate ScrollTrigger for the timeline to make it more seamless
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top 80%", // Start earlier
+        end: "bottom 20%",
+        scrub: true,
+        onUpdate: (self) => {
+          // Smoothly animate the timeline height based on scroll progress
+          if (timelineRef.current) {
+            gsap.to(timelineRef.current, {
+              height: `${self.progress * 100}%`,
+              opacity: 0.5 + (self.progress * 0.5), // Gradually increase opacity
+              duration: 0.1, // Short duration for smoother updates
+              ease: "none",
+              overwrite: true
+            });
+          }
+        }
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-twilight-blue text-white relative overflow-hidden">
+    <section 
+      ref={sectionRef} 
+      className="py-20 bg-gradient-to-b from-[#0a1e0a] to-black text-white relative overflow-hidden"
+    >
       {/* Background pattern */}
       <div className="absolute inset-0 bg-pattern opacity-10"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16 transform transition-all duration-700 opacity-0 animate-fade-in">
+        <div className="text-center mb-16 transform transition-all duration-700 opacity-0 animate-fadeIn">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-white">
             Our Approach: <span className="text-warm-orange">Beyond Software Development</span>
           </h2>
@@ -74,25 +132,41 @@ export default function OurApproachSection() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {APPROACH.map((item, i) => (
-            <div 
-              key={i} 
-              className="approach-card bg-dusky-teal p-8 rounded-lg shadow-md border border-twilight-blue 
-                         transform transition-all duration-500 opacity-0 translate-y-8
-                         hover:shadow-xl hover:-translate-y-2"
-            >
-              <div className="w-16 h-16 border-2 border-warm-orange rounded-full flex items-center justify-center mb-6 
-                              text-warm-orange font-medium text-xl mx-auto
-                              transition-all duration-300 hover:scale-110 hover:bg-warm-orange hover:text-white">
-                {i + 1}
+        {/* Vertical Timeline */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Center line */}
+          <div 
+            ref={timelineRef}
+            className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-green-400 to-purple-500 h-0 z-0"
+          ></div>
+          
+          {/* Timeline items */}
+          {APPROACH.map((item, i) => {
+            return (
+              <div 
+                key={i}
+                ref={itemsRef.current[i] || null}
+                className={`relative z-10 flex items-center mb-16 last:mb-0 ${
+                  i % 2 === 0 ? 'justify-start' : 'justify-end'
+                }`}
+              >
+                {/* Timeline node */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-black border-4 border-warm-orange flex items-center justify-center z-20">
+                  <span className="text-warm-orange font-bold">{i + 1}</span>
+                </div>
+                
+                {/* Content card */}
+                <div className={`w-5/12 ${i % 2 === 0 ? 'pr-12' : 'pl-12'}`}>
+                  <div className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <h3 className="text-xl font-bold mb-3 text-warm-orange">{item.title}</h3>
+                    <p className="text-gray-300">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-sunset-peach text-center">{item.title}</h3>
-              <p className="text-gray-300 text-center">
-                {item.description}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       

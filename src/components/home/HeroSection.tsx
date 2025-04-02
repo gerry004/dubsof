@@ -55,7 +55,8 @@ export default function HeroSection({
       // Set initial state to blank
       gsap.set(subtitleRef.current, { innerHTML: "" });
       
-      const subtitleText = "Eliminating inefficiency in SMEs with<br/>";
+      // Remove the <br/> tag for mobile responsiveness
+      const subtitleText = "Eliminating inefficiency in SMEs with ";
       tl.to(subtitleRef.current, {
         duration: 1,
         text: subtitleText,
@@ -76,6 +77,19 @@ export default function HeroSection({
       });
     }
     
+    // Animate the horizontal divider - moved after subtitle animation
+    const dividerRef = document.querySelector('#hero-section .h-px.bg-gray-500');
+    if (dividerRef) {
+      gsap.set(dividerRef, { width: 0 });
+      
+      // Add the divider animation after the subtitle is complete
+      tl.to(dividerRef, {
+        width: '100%',
+        duration: 1,
+        ease: "power1.inOut",
+      }, "+=0.2");
+    }
+    
     if (descriptionRef.current) {
       // Set initial state to blank
       gsap.set(descriptionRef.current, { text: "" });
@@ -86,18 +100,6 @@ export default function HeroSection({
         text: descriptionText,
         ease: "none",
       }, "+=0.3");
-    }
-    
-    // Animate the horizontal divider
-    const dividerRef = document.querySelector('#hero-section .h-px.bg-gray-500');
-    if (dividerRef) {
-      gsap.set(dividerRef, { width: 0 });
-      
-      tl.to(dividerRef, {
-        width: '100%',
-        duration: 1,
-        ease: "power1.inOut",
-      }, "+=0.2");
     }
     
     return () => {

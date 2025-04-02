@@ -116,7 +116,7 @@ export default function OurApproachSection() {
   return (
     <section 
       ref={sectionRef} 
-      className="py-20 bg-gradient-to-b from-[#0a1e0a] to-black text-white relative overflow-hidden"
+      className="py-20 bg-gradient-to-b from-[#0a1e0a] via-[#0a1e0a] to-black text-white relative overflow-hidden"
     >
       {/* Background pattern */}
       <div className="absolute inset-0 bg-pattern opacity-10"></div>
@@ -147,7 +147,7 @@ export default function OurApproachSection() {
                 key={i}
                 ref={itemsRef.current[i] || null}
                 className={`relative z-10 flex items-center mb-16 last:mb-0 ${
-                  i % 2 === 0 ? 'justify-start' : 'justify-end'
+                  i % 2 === 0 ? 'md:justify-start justify-center' : 'md:justify-end justify-center'
                 }`}
               >
                 {/* Timeline node */}
@@ -156,7 +156,7 @@ export default function OurApproachSection() {
                 </div>
                 
                 {/* Content card */}
-                <div className={`w-5/12 ${i % 2 === 0 ? 'pr-12' : 'pl-12'}`}>
+                <div className={`w-full md:w-5/12 ${i % 2 === 0 ? 'md:pr-12 px-4' : 'md:pl-12 px-4'}`}>
                   <div className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
                     <h3 className="text-xl font-bold mb-3 text-warm-orange">{item.title}</h3>
                     <p className="text-gray-300">

@@ -145,7 +145,7 @@ export default function HeroSection({
         <div className="hidden md:flex md:w-[35%] items-center justify-center p-8 md:p-12">
           <div className="w-full max-w-[400px] aspect-square relative">
             <Image 
-              src="/images/logo-square.png" 
+              src="/images/logo-square-white.png" 
               alt="The Dublin Software Company Logo" 
               width={400} 
               height={400}
@@ -167,13 +167,13 @@ export default function HeroSection({
               ref={titleRef}
               className="text-5xl md:text-7xl font-serif mb-6 leading-tight whitespace-pre-line"
             >
-              The Dublin<br />Software Co.
+              {/* Content will be filled by GSAP */}
             </h1>
             <p 
               ref={subtitleRef}
               className="text-lg md:text-xl mb-4"
             >
-              {/* The content will be filled by GSAP */}
+              {/* Content will be filled by GSAP */}
             </p>
             
             <div className="h-px bg-gray-500 w-full my-8"></div>
@@ -182,12 +182,7 @@ export default function HeroSection({
               ref={descriptionRef}
               className="text-lg md:text-xl mb-8 max-w-2xl"
             >
-              AI is changing at a blistering pace.
-              Our team partners with you to find
-              the best opportunities for AI-driven
-              value and to build solutions that
-              integrate seamlessly with your
-              operations.
+              {/* Content will be filled by GSAP */}
             </p>
           </div>
           

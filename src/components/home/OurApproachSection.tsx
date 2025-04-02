@@ -161,11 +161,14 @@ export default function OurApproachSection() {
         
         {/* Vertical Timeline */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Center line */}
+          {/* Center line - hidden on mobile, visible on md and up */}
           <div 
             ref={timelineRef}
-            className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-green-400 to-purple-500 h-0 z-0"
+            className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-green-400 to-purple-500 h-0 z-0 hidden md:block"
           ></div>
+          
+          {/* Mobile timeline line - only visible on mobile */}
+          <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-green-400 to-purple-500 z-0 md:hidden"></div>
           
           {/* Timeline items */}
           {APPROACH.map((item, i) => {
@@ -173,17 +176,25 @@ export default function OurApproachSection() {
               <div 
                 key={i}
                 ref={itemsRef.current[i] || null}
-                className={`relative z-10 flex items-center mb-16 last:mb-0 ${
-                  i % 2 === 0 ? 'md:justify-start justify-center' : 'md:justify-end justify-center'
+                className={`relative z-10 flex items-start mb-16 last:mb-0 ${
+                  i % 2 === 0 ? 'md:justify-start' : 'md:justify-end'
                 }`}
               >
-                {/* Timeline node */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-black border-4 border-warm-orange flex items-center justify-center z-20">
+                {/* Timeline node - positioned differently on mobile vs desktop */}
+                <div className={`
+                  w-12 h-12 rounded-full bg-black border-4 border-warm-orange flex items-center justify-center z-20
+                  md:absolute md:left-1/2 md:transform md:-translate-x-1/2
+                  absolute left-8 transform -translate-x-1/2
+                `}>
                   <span className="text-warm-orange font-bold">{i + 1}</span>
                 </div>
                 
-                {/* Content card */}
-                <div className={`w-full md:w-5/12 ${i % 2 === 0 ? 'md:pr-12 px-4' : 'md:pl-12 px-4'}`}>
+                {/* Content card - adjusted for mobile */}
+                <div className={`
+                  md:w-5/12 
+                  ${i % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}
+                  pl-16 pr-4 w-full md:pl-0
+                `}>
                   <div 
                     ref={contentRefs.current[i] || null}
                     className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"

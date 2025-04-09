@@ -107,7 +107,7 @@ export default function ContactSection() {
               </div>
               
               <button type="submit" className="w-full px-6 py-3 bg-warm-orange text-white font-medium rounded-md shadow-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-warm-orange focus:ring-offset-2 transition-colors duration-300">
-                Send Message
+                Transform Now
               </button>
             </form>
           </div>

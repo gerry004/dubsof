@@ -84,6 +84,17 @@ export default function ContactSection() {
               </div>
               
               <div className="mb-5">
+                <label htmlFor="company" className="block text-gray-300 font-medium mb-2">Company</label>
+                <input 
+                  type="text" 
+                  id="company"
+                  name="company"
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-warm-orange focus:border-transparent transition-colors"
+                  placeholder="Your company"
+                />
+              </div>
+              
+              <div className="mb-5">
                 <label htmlFor="position" className="block text-gray-300 font-medium mb-2">Position</label>
                 <input 
                   type="text" 
@@ -92,17 +103,6 @@ export default function ContactSection() {
                   required
                   className="w-full px-4 py-3 bg-black/30 border border-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-warm-orange focus:border-transparent transition-colors"
                   placeholder="Your position"
-                />
-              </div>
-              
-              <div className="mb-5">
-                <label htmlFor="company" className="block text-gray-300 font-medium mb-2">Company</label>
-                <input 
-                  type="text" 
-                  id="company"
-                  name="company"
-                  className="w-full px-4 py-3 bg-black/30 border border-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-warm-orange focus:border-transparent transition-colors"
-                  placeholder="Your company"
                 />
               </div>
               

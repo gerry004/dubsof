@@ -6,8 +6,9 @@ export async function POST(request: Request) {
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
+    const position = formData.get('position') as string;
     const company = formData.get('company') as string;
-    const message = formData.get('message') as string;
 
     // Create a transporter
     const transporter = nodemailer.createTransport({
@@ -27,18 +28,17 @@ export async function POST(request: Request) {
       text: `
         Name: ${name}
         Email: ${email}
+        Phone: ${phone}
+        Position: ${position}
         Company: ${company || 'Not provided'}
-        
-        Message:
-        ${message}
       `,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Position:</strong> ${position}</p>
         <p><strong>Company:</strong> ${company || 'Not provided'}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
       `,
     };
 

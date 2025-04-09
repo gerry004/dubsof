@@ -72,6 +72,30 @@ export default function ContactSection() {
               </div>
               
               <div className="mb-5">
+                <label htmlFor="phone" className="block text-gray-300 font-medium mb-2">Phone Number</label>
+                <input 
+                  type="tel" 
+                  id="phone"
+                  name="phone"
+                  required
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-warm-orange focus:border-transparent transition-colors"
+                  placeholder="Your phone number"
+                />
+              </div>
+              
+              <div className="mb-5">
+                <label htmlFor="position" className="block text-gray-300 font-medium mb-2">Position</label>
+                <input 
+                  type="text" 
+                  id="position"
+                  name="position"
+                  required
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-warm-orange focus:border-transparent transition-colors"
+                  placeholder="Your position"
+                />
+              </div>
+              
+              <div className="mb-5">
                 <label htmlFor="company" className="block text-gray-300 font-medium mb-2">Company</label>
                 <input 
                   type="text" 
@@ -80,18 +104,6 @@ export default function ContactSection() {
                   className="w-full px-4 py-3 bg-black/30 border border-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-warm-orange focus:border-transparent transition-colors"
                   placeholder="Your company"
                 />
-              </div>
-              
-              <div className="mb-5">
-                <label htmlFor="message" className="block text-gray-300 font-medium mb-2">Message</label>
-                <textarea 
-                  id="message"
-                  name="message"
-                  required
-                  rows={4}
-                  className="w-full px-4 py-3 bg-black/30 border border-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-warm-orange focus:border-transparent transition-colors"
-                  placeholder="How can we help you?"
-                ></textarea>
               </div>
               
               <button type="submit" className="w-full px-6 py-3 bg-warm-orange text-white font-medium rounded-md shadow-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-warm-orange focus:ring-offset-2 transition-colors duration-300">

@@ -4,11 +4,10 @@ import Image from "next/image";
 
 const LOGOS = [
   { src: "/images/logos/coke.png", alt: "Coke Logo" },
-  { src: "/images/logos/gsk.jpg", alt: "GSK Logo" },
+  { src: "/images/logos/gsk.png", alt: "GSK Logo" },
   { src: "/images/logos/jandj.png", alt: "J&J Logo" },
-  { src: "/images/logos/pandg.svg", alt: "P&G Logo" },
-  { src: "/images/logos/pepsi.svg", alt: "Pepsi Logo" },
-  { src: "/images/logos/goliath.jpg", alt: "Goliath Logo" },
+  { src: "/images/logos/pepsi1.png", alt: "Pepsi Logo" },
+  { src: "/images/logos/abb.png", alt: "ABB Logo" },
 ];
 
 interface PartnersSectionProps {
@@ -29,7 +28,7 @@ export default function PartnersSection({
       >
         {!isDark && (
           <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
-            Our Clients Work With
+            Our Clients Serve
           </h2>
         )}
 
@@ -41,15 +40,15 @@ export default function PartnersSection({
               {LOGOS.map((logo, i) => (
                 <div
                   key={i}
-                  className={`mx-4 w-24 h-12 flex items-center justify-center ${
+                  className={`mx-6 w-32 h-16 flex items-center justify-center ${
                     isDark ? "filter brightness-0 invert opacity-80" : ""
                   }`}
                 >
                   <Image
                     src={logo.src}
                     alt={logo.alt}
-                    width={80}
-                    height={40}
+                    width={100}
+                    height={50}
                     className="object-contain max-h-full"
                   />
                 </div>
@@ -61,15 +60,15 @@ export default function PartnersSection({
               {LOGOS.map((logo, i) => (
                 <div
                   key={`dup-${i}`}
-                  className={`mx-4 w-24 h-12 flex items-center justify-center ${
+                  className={`mx-6 w-32 h-16 flex items-center justify-center ${
                     isDark ? "filter brightness-0 invert opacity-80" : ""
                   }`}
                 >
                   <Image
                     src={logo.src}
                     alt={logo.alt}
-                    width={80}
-                    height={40}
+                    width={100}
+                    height={50}
                     className="object-contain max-h-full"
                   />
                 </div>

@@ -179,16 +179,16 @@ export default function HeroSection({
           <div className="w-px bg-gray-500 h-full"></div>
         </div>
 
-        {/* Right side with content */}
-        <div className="w-full md:w-[60%] flex flex-col justify-between p-8 md:p-12 text-white">
+        {/* Right side with content - now centered vertically on desktop */}
+        <div className="w-full md:w-[60%] flex flex-col p-8 md:p-12 text-white md:justify-center relative">
           <div className="max-w-3xl">
             <h1
               ref={titleRef}
-              className="text-5xl md:text-7xl font-serif mb-6 leading-tight whitespace-pre-line"
+              className="text-5xl md:text-7xl font-serif mb-6 leading-tight whitespace-pre-line min-h-[120px] md:min-h-[180px]"
             >
               {/* Content will be filled by GSAP */}
             </h1>
-            <p ref={subtitleRef} className="text-lg md:text-xl mb-4">
+            <p ref={subtitleRef} className="text-lg md:text-xl mb-4 min-h-[28px] md:min-h-[32px]">
               {/* Content will be filled by GSAP */}
             </p>
 
@@ -196,14 +196,14 @@ export default function HeroSection({
 
             <p
               ref={descriptionRef}
-              className="text-lg md:text-xl mb-8 max-w-2xl"
+              className="text-lg md:text-xl mb-8 max-w-2xl min-h-[120px] md:min-h-[150px]"
             >
               {/* Content will be filled by GSAP */}
             </p>
           </div>
 
-          {/* Former clients section */}
-          <div className="mt-auto">
+          {/* Former clients section - positioned with less gap */}
+          <div className="mt-4 md:mt-8">
             <p className="text-sm uppercase tracking-wider text-gray-400 mb-4">
               OUR CLIENTS SERVE
             </p>
